@@ -19,13 +19,13 @@ FROM httpd:2.4
 # ----------
 MAINTAINER Jim Basilio <jim.basilio@gmail.com>
 
-# Root commands
-USER root
+# Copy file in as daemon user
+USER daemon
 
-# httpd.conf turns on rewrite module and also allows overrides to 
-# /usr/local/apache2/htdocs in order to allow htaccess support
+# httpd.conf turns on rewrite module and rewrites 404 errors to load index.html then redirect client
 COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
-COPY ./htaccess /usr/share/htdocs/.htaccess
+
+USER root
 
 # Define default command to start bash. 
 CMD [ "httpd-foreground" ]
